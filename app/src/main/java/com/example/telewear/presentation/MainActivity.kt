@@ -24,10 +24,27 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.example.telewear.R
 import com.example.telewear.presentation.theme.TelewearTheme
+import org.drinkless.td.libcore.telegram.Client;
+import org.drinkless.td.libcore.telegram.Client.ResultHandler
+import org.drinkless.td.libcore.telegram.TdApi
+
+class ResultHandler : Client.ResultHandler{
+    override fun onResult(`object`: TdApi.Object?) {
+        TODO("Not yet implemented")
+    }
+}
+
+class ExceptionHandler : Client.ExceptionHandler{
+    override fun onException(e: Throwable?) {
+        TODO("Not yet implemented")
+    }
+
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val client =  Client.create(ResultHandler(), ExceptionHandler(), ExceptionHandler())
         setContent {
             WearApp("Android")
         }
