@@ -68,6 +68,8 @@ captures/
 
 # IntelliJ
 *.iml
+.idea/codeStyles
+.idea/inspectionProfiles
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
