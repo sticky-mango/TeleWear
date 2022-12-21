@@ -38,7 +38,8 @@ fun MainButton(iconProperties: IconProperties, callback: () -> Unit) {
         Icon(
             imageVector = ImageVector.vectorResource(id = iconProperties.iconType),
             contentDescription = iconProperties.contentDesc,
-            modifier = Modifier.size(iconProperties.size)
+            modifier = Modifier.size(iconProperties.size),
+            tint = Color.Black
         )
     }
 }
@@ -49,13 +50,14 @@ data class IconProperties(val iconType: Int, val contentDesc: String, val size: 
 fun ChatCard(message: ChatData) {
     Row(
         modifier = Modifier.padding(all = 2.dp)
-            .fillMaxWidth(0.9f)
+            .fillMaxWidth(1f)
             .clip(RoundedCornerShape(32.dp))
             .background(color = Color(0xFF202124))
             .clickable {/*TODO open chat with user*/},
         horizontalArrangement = Arrangement.Center,
 
     ) {
+        //Profile Picture
         Image(
             painter = painterResource(R.drawable.mango),
             contentDescription = "Contact profile picture",
@@ -70,6 +72,7 @@ fun ChatCard(message: ChatData) {
         Spacer(modifier = Modifier.width(12.dp))
 
         Column {
+            // Contact Name
             Text(
                 text = message.contactName,
                 modifier = Modifier.padding(top = 8.dp)
@@ -77,6 +80,7 @@ fun ChatCard(message: ChatData) {
 
             Spacer(modifier = Modifier.height(0.dp))
 
+            // Message
             Text(
                 text = message.lastMessage,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -87,9 +91,10 @@ fun ChatCard(message: ChatData) {
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
+            // Message Timestamp
             Text(
-                text = message.lastMessageTime,
-                //fontSize = ChatCardLMTFontSize.sp,
+                text = message.messageTimestamp,
+                //fontSize = ChatCardMsgTimestampFontSize.sp,
                 fontSize = 8.sp,
                 modifier = Modifier.align(CenterHorizontally)
                     .padding(top = 14.dp, start = 6.dp)
@@ -99,4 +104,4 @@ fun ChatCard(message: ChatData) {
 
 }
 
-data class ChatData(val contactName: String, val lastMessage: String, val lastMessageTime: String)
+data class ChatData(val contactName: String, val lastMessage: String, val messageTimestamp: String)

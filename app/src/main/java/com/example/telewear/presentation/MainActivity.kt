@@ -16,9 +16,10 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import org.drinkless.td.libcore.telegram.Client
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.ScalingLazyColumn
+import androidx.wear.compose.material.ScalingLazyColumnDefaults
 import com.example.telewear.R
 import com.example.telewear.presentation.theme.TelewearTheme
 
@@ -38,19 +39,19 @@ fun WearApp() {
 
         // Set three buttons -> contacts/+/settings
         // Set Contacts list
+        //SetMainButtons()
         SetContactsList()
-        SetMainButtons()
 
         //  for each contact in contact list, build a message card with avatar, name and preview of the last message
     }
 }
 
 @Composable
-fun SetMainButtons() {
+fun MainButtons() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = MainCardRowTopPadding.dp),
+            .padding(top = 40.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.Center
     )
     {
@@ -84,16 +85,22 @@ fun SetMainButtons() {
 
 @Composable
 fun SetContactsList() {
-    LazyColumn(
+
+    ScalingLazyColumn(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        scalingParams = ScalingLazyColumnDefaults.scalingParams(
+            minTransitionArea = 0.2f,
+            maxTransitionArea = 0.3f)
     ) {
         // TODO: Remove item; for beginning only.
-        item { ChatCard(message = ChatData("Sticky Mango", "test", "Wed")) }
+        item { MainButtons() }
         item { ChatCard(message = ChatData("Sticky Mango", "test", "Thu")) }
         item { ChatCard(message = ChatData("Sticky Mango", "test", "Mon")) }
         item { ChatCard(message = ChatData("Sticky Mango", "test", "12:40")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Fri")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Sun")) }
         item { ChatCard(message = ChatData("Sticky Mango", "test", "Fri")) }
     }
 
