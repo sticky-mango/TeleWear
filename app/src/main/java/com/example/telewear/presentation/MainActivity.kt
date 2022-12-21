@@ -15,136 +15,93 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import org.drinkless.td.libcore.telegram.Client
-import org.drinkless.td.libcore.telegram.TdApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.*
 import com.example.telewear.R
 import com.example.telewear.presentation.theme.TelewearTheme
-
-
-class ResultHandler : Client.ResultHandler{
-    override fun onResult(`object`: TdApi.Object?) {
-        TODO("Not yet implemented")
-    }
-}
-
-class ExceptionHandler : Client.ExceptionHandler{
-    override fun onException(e: Throwable?) {
-        TODO("Not yet implemented")
-    }
-
-}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val client =  Client.create(ResultHandler(), ExceptionHandler(), ExceptionHandler())
-        setContent {
-            TelewearTheme {
-
-                // Set three buttons -> contacts/+/settings
-                // Set Contacts list
-                //  for each contact in contact list, build a message card with avatar, name and preview of the last message
-                    ChatCard(ChatData("Alessandro", "Lorem Ipsum"))
-                }
-            }
-        }
-    }
-
-data class ChatData(val contactName : String, val lastMessage : String){
-    internal val date : Int = 2022
-}
-
-data class IconProperties
-
-@Composable
-fun MainButton(){
-    Button(onClick = { /*TODO*/ },
-        modifier = Modifier
-            .padding()
-            .background(MaterialTheme.colors.background)){
-        Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_settings_button),
-            contentDescription = "Gear Icon",
-            modifier = Modifier.size(ButtonDefaults.SmallButtonSize) )
-    }
-}
-
-@Composable
-fun ChatCard(message : ChatData){
-    Row(modifier = Modifier.padding(all = 16.dp),
-        horizontalArrangement = Arrangement.Center) {
-        Image(
-            painter = painterResource(R.drawable.mango),
-            contentDescription = "Contact profile picture",
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
+        val client = Client.create(Client.ResultHandler(function = {}),
+            Client.ExceptionHandler(function = {}), Client.ExceptionHandler(function = {})
         )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column {
-            Text(
-                text = message.contactName
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = message.lastMessage
-            )
-        }
+        setContent { WearApp() }
     }
 }
 
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
-fun AppPreview()
-{
-    ChatCard(ChatData("Alessandro", "Lorem Ipsum"))
-}
-
-/*
-@Composable
-fun WearApp(greetingName: String) {
+fun WearApp() {
     TelewearTheme {
-        */
-/* If you have enough items in your list, use [ScalingLazyColumn] which is an optimized
-         * version of LazyColumn for wear devices with some added features. For more information,
-         * see d.android.com/wear/compose.
-         *//*
 
-        Column(
-                modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background),
-                verticalArrangement = Arrangement.Center
-        ) {
-            Greeting(greetingName = greetingName)
-        }
+        // Set three buttons -> contacts/+/settings
+        // Set Contacts list
+        SetContactsList()
+        //SetMainButtons()
+
+        //  for each contact in contact list, build a message card with avatar, name and preview of the last message
     }
 }
 
 @Composable
-fun Greeting(greetingName: String) {
-    Text(
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.primary,
-            text = stringResource(R.string.hello_world, greetingName)
+fun SetMainButtons() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = MainCardRowTopPadding.dp),
+        horizontalArrangement = Arrangement.Center
     )
+    {
+        MainButton(
+            iconProperties = IconProperties(
+                R.drawable.ic_new_chat_button,
+                contentDesc = "Person Icon",
+                size = MainButtonIconSize.dp,
+            ), callback = {})
+
+        Spacer(modifier = Modifier.width(MainButtonSpacerWidth.dp))
+
+        MainButton(
+            iconProperties = IconProperties(
+                R.drawable.ic_add_button,
+                contentDesc = "Plus Icon",
+                size = MainButtonIconSize.dp,
+            ), callback = {})
+
+        Spacer(modifier = Modifier.width(MainButtonSpacerWidth.dp))
+
+        MainButton(
+            iconProperties = IconProperties(
+                R.drawable.ic_settings_button,
+                contentDesc = "Gear Icon",
+                size = MainButtonIconSize.dp,
+            ), callback = {})
+    }
 }
+
+
+@Composable
+fun SetContactsList() {
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // TODO: Remove item; for beginning only.
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Wed")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Thu")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Mon")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "12:40")) }
+        item { ChatCard(message = ChatData("Sticky Mango", "test", "Fri")) }
+    }
+
+}
+
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
-fun DefaultPreview() {
-    WearApp("Preview Android")
-}*/
+fun AppPreview() {
+    ChatCard(ChatData("Alessandro", "Lorem Ipsum", "12:40"))
+}
