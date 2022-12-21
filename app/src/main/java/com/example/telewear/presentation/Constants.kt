@@ -1,7 +1,5 @@
 package com.example.telewear.presentation
 
-import androidx.compose.ui.unit.dp
-
 // MainButton Component Constants
 const val MainButtonIconSize = 24
 const val MainButtonSpacerWidth = 16

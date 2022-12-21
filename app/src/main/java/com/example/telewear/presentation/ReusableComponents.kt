@@ -2,19 +2,16 @@ package com.example.telewear.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -52,10 +49,12 @@ data class IconProperties(val iconType: Int, val contentDesc: String, val size: 
 fun ChatCard(message: ChatData) {
     Row(
         modifier = Modifier.padding(all = 2.dp)
-            //.border(width = Dp.Hairline,color = Color.Red, shape = RoundedCornerShape(32.dp))
-            .fillMaxWidth(1f)
-            .background(color = Color(0xFF202124), shape = RoundedCornerShape(32.dp)),
-        horizontalArrangement = Arrangement.Center
+            .fillMaxWidth(0.9f)
+            .clip(RoundedCornerShape(32.dp))
+            .background(color = Color(0xFF202124))
+            .clickable {/*TODO open chat with user*/},
+        horizontalArrangement = Arrangement.Center,
+
     ) {
         Image(
             painter = painterResource(R.drawable.mango),

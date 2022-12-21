@@ -39,7 +39,7 @@ fun WearApp() {
         // Set three buttons -> contacts/+/settings
         // Set Contacts list
         SetContactsList()
-        //SetMainButtons()
+        SetMainButtons()
 
         //  for each contact in contact list, build a message card with avatar, name and preview of the last message
     }
