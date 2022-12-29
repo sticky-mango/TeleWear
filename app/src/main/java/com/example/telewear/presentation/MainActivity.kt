@@ -22,12 +22,16 @@ import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.ScalingLazyColumnDefaults
 import com.example.telewear.R
 import com.example.telewear.presentation.theme.TelewearTheme
+import org.drinkless.td.libcore.telegram.TdApi
+import org.drinkless.td.libcore.telegram.TdApi.LogVerbosityLevel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val client = Client.create(Client.ResultHandler(function = {}),
-            Client.ExceptionHandler(function = {}), Client.ExceptionHandler(function = {})
+        Client.execute(TdApi.SetLogVerbosityLevel(5))
+        //Client.execute(TdApi.SetLogStream(TdApi.LogStreamFile("tdlib.log", 1 shl 27, false )))
+        Client.execute(TdApi.SetLogStream(TdApi.LogStreamDefault()))
+        val client = Client.create(UpdateHandler(),Client.ExceptionHandler(function = {}), Client.ExceptionHandler(function = {})
         )
         setContent { WearApp() }
     }
@@ -36,7 +40,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp() {
     TelewearTheme {
+        while (true){
 
+        }
         // Set three buttons -> contacts/+/settings
         // Set Contacts list
         //SetMainButtons()
