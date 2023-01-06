@@ -23,9 +23,12 @@ import androidx.wear.compose.material.ScalingLazyColumnDefaults
 import com.example.telewear.R
 import com.example.telewear.presentation.theme.TelewearTheme
 import org.drinkless.td.libcore.telegram.TdApi
+import org.drinkless.td.libcore.telegram.TdApi.AuthorizationState
 import org.drinkless.td.libcore.telegram.TdApi.LogVerbosityLevel
 
 class MainActivity : ComponentActivity() {
+    private final var authState : AuthorizationState? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Client.execute(TdApi.SetLogVerbosityLevel(5))

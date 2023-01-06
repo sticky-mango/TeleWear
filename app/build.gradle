@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace 'com.example.telewear'
     compileSdk 32
@@ -20,7 +23,14 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField("String", "TELEGRAM_API_ID", "\"" + localProperties['telegram.api_id'] + "\"")
+            buildConfigField("String", "TELEGRAM_API_HASH", "\"" + localProperties['telegram.api_hash'] + "\"")
+        }
         release {
+            buildConfigField("String", "TELEGRAM_API_ID", "\"" + localProperties['telegram.api_id'] + "\"")
+            buildConfigField("String", "TELEGRAM_API_HASH", "\"" + localProperties['telegram.api_hash'] + "\"")
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
